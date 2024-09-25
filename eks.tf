@@ -3,18 +3,22 @@ resource "aws_eks_cluster" "foodway_eks_cluster" {
   role_arn = var.lab_role
 
   vpc_config {
-    subnet_ids = [aws_subnet.subnet-msv-a.id, aws_subnet.subnet-msv-b.id]
+    subnet_ids             = aws_subnet.public_subnets[*].id
+    endpoint_public_access = true
   }
 }
 
-resource "aws_eks_fargate_profile" "foodway_fargate" {
-  cluster_name           = aws_eks_cluster.foodway_eks_cluster.name
-  fargate_profile_name   = "foodway_fargate_profile"
-  pod_execution_role_arn = var.lab_role
+resource "aws_eks_node_group" "foodway_eks_node_group" {
+  cluster_name    = aws_eks_cluster.foodway_eks_cluster.name
+  node_group_name = "foodway_eks_node"
+  node_role_arn   = var.lab_role
+  subnet_ids      = aws_subnet.public_subnets[*].id
 
-  subnet_ids = [aws_subnet.subnet-msv-a.id, aws_subnet.subnet-msv-b.id]
+  instance_types = ["t3.medium"]
 
-  selector {
-    namespace = "foodway"
+  scaling_config {
+    desired_size = 1
+    max_size     = 1
+    min_size     = 1
   }
 }
