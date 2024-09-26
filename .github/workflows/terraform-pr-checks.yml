@@ -3,7 +3,7 @@ name: Terraform Validate and Plan
 on:
   pull_request:
     branches:
-      - add-checks
+      - main
 
 jobs:
   terraform:
@@ -27,7 +27,9 @@ jobs:
         with:
           terraform_version: 1.9.6
 
-      -
+      - name: Terraform Format
+        run: terraform fmt -check
+        continue-on-error: false
 
       - name: Terraform Init
         run: terraform init

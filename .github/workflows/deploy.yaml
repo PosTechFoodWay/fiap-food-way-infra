@@ -1,13 +1,13 @@
-name: Terraform Validate and Plan
+name: Terraform Apply on Main
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
 jobs:
   terraform:
-    name: Terraform Validate and Plan
+    name: Terraform Apply
     runs-on: ubuntu-latest
 
     steps:
