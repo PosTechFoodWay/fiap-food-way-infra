@@ -3,7 +3,7 @@ name: Terraform Validate and Plan
 on:
   pull_request:
     branches:
-      - main
+      - add-checks
 
 jobs:
   terraform:
@@ -27,6 +27,8 @@ jobs:
         with:
           terraform_version: 1.9.6
 
+      -
+
       - name: Terraform Init
         run: terraform init
 
@@ -35,10 +37,5 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
-        env:
-          TF_VAR_lab_role: ${{ secrets.LAB_ROLE }}
-
-      - name: Terraform Apply
-        run: terraform apply --auto-approve
         env:
           TF_VAR_lab_role: ${{ secrets.LAB_ROLE }}
