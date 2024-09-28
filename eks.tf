@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "foodway_eks_cluster" {
-  name     = "foodway_eks_cluster"
+  name     = "foodway_eks_cluster_j5431"
   role_arn = var.lab_role
 
   vpc_config {
